@@ -1,0 +1,47 @@
+meta {
+  name: 06 Create self-approval ticket
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/changes
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+body:json {
+  {
+    "ticketId": "CHG-10004",
+    "system": "Active Directory",
+    "description": "Grant service account access to the finance file share",
+    "approvedBy": "tnguyen",
+    "developedBy": "tnguyen",
+    "deployedBy": "rpatel",
+    "approvalDate": "2026-10-01",
+    "deployDate": "2026-10-02",
+    "tested": true
+  }
+}
+
+tests {
+  test("status is 201", function() {
+    expect(res.status).to.equal(201);
+  });
+  
+  test("flags SELF_APPROVAL", function() {
+    expect(res.body.exceptions.map(e => e.code)).to.eql(["SELF_APPROVAL"]);
+  });
+  
+  test("risk is High", function() {
+    expect(res.body.riskRating).to.equal("High");
+  });
+}
+
+docs {
+  Developer approved his own change. Expected: 201, SELF_APPROVAL, High risk.
+}

@@ -1,0 +1,25 @@
+meta {
+  name: 17 Delete same ticket again
+  type: http
+  seq: 18
+}
+
+delete {
+  url: {{baseUrl}}/changes/{{cleanId}}
+  body: none
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+tests {
+  test("status is 404", function() {
+    expect(res.status).to.equal(404);
+  });
+}
+
+docs {
+  Already deleted. Expected: 404.
+}

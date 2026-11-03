@@ -1,0 +1,41 @@
+meta {
+  name: 07 Create with missing fields
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{baseUrl}}/changes
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+body:json {
+  {
+    "ticketId": "CHG-10001",
+    "system": "Active Directory",
+    "description": "Enforce MFA for the finance security group",
+    "approvedBy": "msmith",
+    "developedBy": "tnguyen",
+    "approvalDate": "2026-10-05",
+    "deployDate": "2026-10-07"
+  }
+}
+
+tests {
+  test("status is 400", function() {
+    expect(res.status).to.equal(400);
+  });
+  
+  test("lists missing fields", function() {
+    expect(res.body.details).to.include("tested is required");
+  });
+}
+
+docs {
+  deployedBy and tested are missing. Expected: 400.
+}

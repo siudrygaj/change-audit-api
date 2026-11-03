@@ -1,0 +1,51 @@
+meta {
+  name: 05 Create untested ticket
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/changes
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+body:json {
+  {
+    "ticketId": "CHG-10003",
+    "system": "Workday",
+    "description": "Update payroll tax tables for 2027",
+    "approvedBy": "msmith",
+    "developedBy": "kwilson",
+    "deployedBy": "rpatel",
+    "approvalDate": "2026-10-08",
+    "deployDate": "2026-10-10",
+    "tested": false
+  }
+}
+
+script:post-response {
+  bru.setVar("untestedId", res.body.id);
+}
+
+tests {
+  test("status is 201", function() {
+    expect(res.status).to.equal(201);
+  });
+  
+  test("flags only UNTESTED", function() {
+    expect(res.body.exceptions.map(e => e.code)).to.eql(["UNTESTED"]);
+  });
+  
+  test("risk is Medium", function() {
+    expect(res.body.riskRating).to.equal("Medium");
+  });
+}
+
+docs {
+  No testing evidence. Expected: 201, UNTESTED, Medium risk. Fixed in request 13.
+}

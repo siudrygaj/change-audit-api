@@ -1,0 +1,31 @@
+meta {
+  name: 15 Counts
+  type: http
+  seq: 16
+}
+
+get {
+  url: {{baseUrl}}/counts
+  body: none
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("totals add up", function() {
+    expect(res.body.total).to.equal(4);
+    expect(res.body.compliant).to.equal(2);
+    expect(res.body.exception).to.equal(2);
+  });
+}
+
+docs {
+  Summary. Expected: 200, total 4, compliant 2, exception 2.
+}

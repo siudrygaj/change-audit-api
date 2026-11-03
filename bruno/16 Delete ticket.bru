@@ -1,0 +1,25 @@
+meta {
+  name: 16 Delete ticket
+  type: http
+  seq: 17
+}
+
+delete {
+  url: {{baseUrl}}/changes/{{cleanId}}
+  body: none
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}
+
+docs {
+  Delete the compliant ticket. Expected: 200.
+}

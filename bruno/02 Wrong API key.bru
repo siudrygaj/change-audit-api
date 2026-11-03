@@ -1,0 +1,25 @@
+meta {
+  name: 02 Wrong API key
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/changes
+  body: none
+  auth: none
+}
+
+headers {
+  X-API-Key: wrong-key
+}
+
+tests {
+  test("status is 401", function() {
+    expect(res.status).to.equal(401);
+  });
+}
+
+docs {
+  Invalid API key. Expected: 401.
+}

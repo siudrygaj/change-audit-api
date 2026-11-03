@@ -1,0 +1,43 @@
+meta {
+  name: 08 Create with bad date
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{baseUrl}}/changes
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+body:json {
+  {
+    "ticketId": "CHG-10001",
+    "system": "Active Directory",
+    "description": "Enforce MFA for the finance security group",
+    "approvedBy": "msmith",
+    "developedBy": "tnguyen",
+    "deployedBy": "rpatel",
+    "approvalDate": "2026-10-05",
+    "deployDate": "10/18/2026",
+    "tested": true
+  }
+}
+
+tests {
+  test("status is 400", function() {
+    expect(res.status).to.equal(400);
+  });
+  
+  test("explains the date problem", function() {
+    expect(res.body.details).to.include("deployDate must be a date in YYYY-MM-DD format");
+  });
+}
+
+docs {
+  deployDate is not YYYY-MM-DD. Expected: 400.
+}

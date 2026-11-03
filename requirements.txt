@@ -1,0 +1,4 @@
+# The python packages that this API would need. Azure reads this file when the app is deployed and will install them in the cloud.
+
+# azure-functions being the library will connect the python code to the azure functions runtime.
+azure-functions

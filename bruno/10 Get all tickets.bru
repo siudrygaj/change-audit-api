@@ -1,0 +1,29 @@
+meta {
+  name: 10 Get all tickets
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{baseUrl}}/changes
+  body: none
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns 4 tickets", function() {
+    expect(res.body.length).to.equal(4);
+  });
+}
+
+docs {
+  Retrieve all tickets. Expected: 200 with 4 tickets.
+}

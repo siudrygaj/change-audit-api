@@ -1,0 +1,18 @@
+# .funcignore is the files that are NOT uploaded to Azure when deployment happens.
+# This being because the server only needs: function_app.py, rules.py, host.json, and requirements.txt.
+
+# Editor settings and Git files
+.git*
+.vscode
+
+# Local virtual environment (Azure installing its own packages)
+.venv
+__pycache__
+
+# Secrets and the settings template (Azure using the App Settings instead)
+local.settings.json
+local.settings.example.json
+
+# Testing suite and docs to make sure it says in my Github and laptop
+bruno
+README.md

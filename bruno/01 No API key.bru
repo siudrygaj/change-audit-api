@@ -1,0 +1,21 @@
+meta {
+  name: 01 No API key
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/changes
+  body: none
+  auth: none
+}
+
+tests {
+  test("status is 401", function() {
+    expect(res.status).to.equal(401);
+  });
+}
+
+docs {
+  No X-API-Key header. Expected: 401.
+}

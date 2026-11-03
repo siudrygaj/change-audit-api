@@ -1,0 +1,25 @@
+meta {
+  name: 00 Purge all tickets
+  type: http
+  seq: 1
+}
+
+delete {
+  url: {{baseUrl}}/changes
+  body: none
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}
+
+docs {
+  Setup: empties the in-memory repository so every run starts clean.
+}

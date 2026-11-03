@@ -1,0 +1,55 @@
+meta {
+  name: 04 Create SoD violation ticket
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/changes
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+body:json {
+  {
+    "ticketId": "CHG-10002",
+    "system": "SAP ECC",
+    "description": "Update vendor payment approval workflow",
+    "approvedBy": "msmith",
+    "developedBy": "akumar",
+    "deployedBy": "akumar",
+    "approvalDate": "2026-10-20",
+    "deployDate": "2026-10-18",
+    "tested": false
+  }
+}
+
+script:post-response {
+  bru.setVar("sodId", res.body.id);
+}
+
+tests {
+  test("status is 201", function() {
+    expect(res.status).to.equal(201);
+  });
+  
+  test("is an Exception", function() {
+    expect(res.body.controlResult).to.equal("Exception");
+  });
+  
+  test("risk is High", function() {
+    expect(res.body.riskRating).to.equal("High");
+  });
+  
+  test("flags all 3 problems", function() {
+    expect(res.body.exceptions.map(e => e.code)).to.have.members(["SOD_VIOLATION", "UNAUTHORIZED", "UNTESTED"]);
+  });
+}
+
+docs {
+  Developer deployed his own change, before approval, untested. Expected: 201, 3 exceptions, High risk.
+}

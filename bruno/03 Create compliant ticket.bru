@@ -1,0 +1,55 @@
+meta {
+  name: 03 Create compliant ticket
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/changes
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+body:json {
+  {
+    "ticketId": "CHG-10001",
+    "system": "Active Directory",
+    "description": "Enforce MFA for the finance security group",
+    "approvedBy": "msmith",
+    "developedBy": "tnguyen",
+    "deployedBy": "rpatel",
+    "approvalDate": "2026-10-05",
+    "deployDate": "2026-10-07",
+    "tested": true
+  }
+}
+
+script:post-response {
+  bru.setVar("cleanId", res.body.id);
+}
+
+tests {
+  test("status is 201", function() {
+    expect(res.status).to.equal(201);
+  });
+  
+  test("is Compliant", function() {
+    expect(res.body.controlResult).to.equal("Compliant");
+  });
+  
+  test("risk is Low", function() {
+    expect(res.body.riskRating).to.equal("Low");
+  });
+  
+  test("has a server-generated id", function() {
+    expect(res.body.id).to.be.a("string");
+  });
+}
+
+docs {
+  Approved, tested, deployed by someone else. Expected: 201, Compliant, Low risk.
+}

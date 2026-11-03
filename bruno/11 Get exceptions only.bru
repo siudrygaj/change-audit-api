@@ -1,0 +1,33 @@
+meta {
+  name: 11 Get exceptions only
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{baseUrl}}/changes?result=Exception
+  body: none
+  auth: none
+}
+
+params:query {
+  result: Exception
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns 3 exceptions", function() {
+    expect(res.body.length).to.equal(3);
+  });
+}
+
+docs {
+  Filter to exceptions. Expected: 200 with 3 tickets.
+}

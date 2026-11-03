@@ -1,0 +1,39 @@
+meta {
+  name: 14 Update unknown ticket
+  type: http
+  seq: 15
+}
+
+put {
+  url: {{baseUrl}}/changes/does-not-exist
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+body:json {
+  {
+    "ticketId": "CHG-10003",
+    "system": "Workday",
+    "description": "Update payroll tax tables for 2027",
+    "approvedBy": "msmith",
+    "developedBy": "kwilson",
+    "deployedBy": "rpatel",
+    "approvalDate": "2026-10-08",
+    "deployDate": "2026-10-10",
+    "tested": true
+  }
+}
+
+tests {
+  test("status is 404", function() {
+    expect(res.status).to.equal(404);
+  });
+}
+
+docs {
+  Id does not exist. Expected: 404.
+}

@@ -1,0 +1,29 @@
+meta {
+  name: 12 Get one ticket
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{baseUrl}}/changes/{{sodId}}
+  body: none
+  auth: none
+}
+
+headers {
+  X-API-Key: {{apiKey}}
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("is CHG-10002", function() {
+    expect(res.body.ticketId).to.equal("CHG-10002");
+  });
+}
+
+docs {
+  Retrieve one ticket by id. Expected: 200.
+}

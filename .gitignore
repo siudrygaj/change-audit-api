@@ -1,0 +1,27 @@
+# .gitignore being the files that Git will NEVER commit to Github. This being information like sensitive information, new generated files, and local artifacts.
+
+
+
+# Sensitive Information
+# Holding the real API key.
+local.settings.json
+.env
+
+
+
+# Local Artifacts
+# Installed packages, rebuilt from requirements.txt
+.venv/
+# My Mac Finder files and editor settings
+.vscode/
+.DS_Store
+
+
+
+# Generated Files
+# Python will create these automatically when the code is ran.
+__pycache__/
+*.pyc
+.python_packages/
+# Bruno HTML test report back
+results.html
